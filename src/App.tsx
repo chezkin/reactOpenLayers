@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import MyMap from './components/MyMap';
 import MyMap2 from './components/MyMap2';
+import MapOpenLayers from './components/MapOpenLayers';
 
 function Copyright() {
   return (
@@ -20,12 +21,12 @@ function Copyright() {
 
 export default function App() {
   return (
-    <Container maxWidth="sm">
-      <Box sx={{ my: 4 }}>
+    <Container maxWidth="xl" sx={{ padding: '9px'}}>
+      <Box sx={{ my: 4 , display:'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
         <Typography variant="h4" component="h1" gutterBottom>
         Open Layers map's example
         </Typography>
-        <MyMap/>
+        < MapOpenLayers/>
         <Copyright />
       </Box>
     </Container>

@@ -21,7 +21,6 @@
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "@vitejs/plugin-react": "latest",
-    "react-openlayers": "^0.3.0",
     "typescript": "latest",
     "vite": "latest"
   }
