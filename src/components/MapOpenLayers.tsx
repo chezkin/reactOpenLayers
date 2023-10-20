@@ -43,6 +43,7 @@ import VectorImageLayer from 'ol/layer/VectorImage';
   // arry of map (layers . tile)  
 import { Layers } from './LayersANDbtns';
 import LayersANDbtns from './LayersANDbtns';
+import LandmarkIconBtn from './LandmarkIconBtn';
 
 
 
@@ -141,7 +142,7 @@ const MapOpenLayers = (props: Props) => {
     return () => map.setTarget("")
 
 
-  }, [IconStateBtn]);
+  }, []);
 
 
 
@@ -159,31 +160,9 @@ const MapOpenLayers = (props: Props) => {
           <IconButton onClick={() => { setIconStateBtn(!IconStateBtn) }}><EditLocationOutlinedIcon /></IconButton>
         </Box>
         {
-          layerStateBtn && <LayersANDbtns map={map!} />
+          layerStateBtn && <LayersANDbtns map={map!} /> 
         }
-        {IconStateBtn && <Paper sx={{ m: '3px' }} elevation={12}>
-
-          <IconButton sx={{ width: '43px', height: '43px' }} onClick={() => { srcIconPath.current = '../../public/Pin.svg' }}>
-            <img width='100%' src='../../public/Pin.svg' alt='Pin icon' />
-          </IconButton>
-
-          <IconButton sx={{ width: '43px', height: '43px' }} onClick={() => { srcIconPath.current = '../../public/boom.svg' }}>
-            <img width='100%' src='../../public/boom.svg' alt='boom icon' />
-          </IconButton>
-
-          <IconButton sx={{ width: '43px', height: '43px' }} onClick={() => { srcIconPath.current = '../../public/redlooc.svg' }}>
-            <img width='100%' src='../../public/redlooc.svg' alt='boom icon' />
-          </IconButton>
-
-          <IconButton sx={{ width: '43px', height: '43px' }} onClick={() => { srcIconPath.current = '../../public/location.svg' }}>
-            <img width='100%' src='../../public/location.svg' alt='boom icon' />
-          </IconButton>
-
-          <IconButton sx={{ width: '43px', height: '43px' }} onClick={() => { srcIconPath.current = '../../public/red.svg' }}>
-            <img width='100%' src='../../public/red.svg' alt='boom icon' />
-          </IconButton>
-
-        </Paper>}
+        {IconStateBtn && <LandmarkIconBtn refrens={srcIconPath} />}
 
         <Button onClick={() => controlMapFunc.changeCenterToJeroslem(map!)}>change center to Jerusalem</Button>
         <Button onClick={() => controlMapFunc.originalCenter(map!)}>original Center</Button>
