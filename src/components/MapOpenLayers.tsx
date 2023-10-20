@@ -40,6 +40,11 @@ import Icon from 'ol/style/Icon';
 import { useGeographic } from 'ol/proj';
 import VectorImageLayer from 'ol/layer/VectorImage';
 
+  // arry of map (layers . tile)  
+import { Layers } from './LayersANDbtns';
+import LayersANDbtns from './LayersANDbtns';
+
+
 
 type Props = {}
 
@@ -57,19 +62,9 @@ const MapOpenLayers = (props: Props) => {
 
 
 
-  // arry of map (layers . tile)  
-  const xyzStandartLayer = new TileLayer({
-    source: new XYZ({
-      url: 'https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}',
-    }),
-    visible: true,
 
-  })
 
-  const osmStandartLayer = new TileLayer({
-    source: new OSM({}),
-    visible: true,
-  })
+
 
   // on hover mouse position
   const mousePositionControl = new MousePosition({
@@ -80,6 +75,11 @@ const MapOpenLayers = (props: Props) => {
 
 
   useEffect(() => {
+    
+    const initTile = new TileLayer({
+      source: Layers[0].source,
+      visible: true,
+    })
     const feature = new Feature({
       geometry: new Point([35.2343, 31.7768])
     });
@@ -87,29 +87,31 @@ const MapOpenLayers = (props: Props) => {
     feature.setId('Jerusalem');
     feature.setStyle(new Style({
       image: new Icon({
-        src: '../../public/Pin.svg',
-        width: 22,
-        height: 22
+        src: '../../public/cuty.svg',
+        width: 42,
+        height: 42,
+        color: 'black'
       })
     }))
+
     const initalFeaturesLayer = new VectorLayer({
       source: new VectorSource({
         features: [feature]
       })
     })
 
-    const initalFeatures = new VectorImageLayer({
+    const geoJSONlayer = new VectorImageLayer({
       source: new VectorSource({
         url: '../../public/map.geojson',
-       format: new GeoJSON()
+        format: new GeoJSON()
       })
     })
 
     const map = new Map({
       layers: [
         // USGS Topo
-        osmStandartLayer,
-        initalFeatures,
+        initTile,
+        // geoJSONlayer,
         initalFeaturesLayer,
       ],
       controls: [mousePositionControl],
@@ -131,13 +133,9 @@ const MapOpenLayers = (props: Props) => {
       const pixel = map.getEventPixel(e.originalEvent);
       const hit = map.forEachFeatureAtPixel(pixel, feature => feature);
       hit ?
-      source?.removeFeature(hit as Feature<Point>)
-      :
-      controlMapFunc.coordinateClicked(source!, coordinate, srcIconPath.current)
-      
-
-      
-
+        source?.removeFeature(hit as Feature<Point>)
+        :
+        controlMapFunc.coordinateClicked(source!, coordinate, srcIconPath.current)
     });
 
     return () => map.setTarget("")
@@ -160,8 +158,9 @@ const MapOpenLayers = (props: Props) => {
           <IconButton onClick={() => { setLayerStateBtn(!layerStateBtn) }}><LayersOutlinedIcon /></IconButton>
           <IconButton onClick={() => { setIconStateBtn(!IconStateBtn) }}><EditLocationOutlinedIcon /></IconButton>
         </Box>
-        {layerStateBtn && <Paper sx={{ m: '3px' }} elevation={12}><Button onClick={() => { controlMapFunc.cangeLayer(map!, xyzStandartLayer) }}>xyz layre</Button>
-          <Button onClick={() => { controlMapFunc.cangeLayer(map!, osmStandartLayer) }}>osm layre</Button></Paper>}
+        {
+          layerStateBtn && <LayersANDbtns map={map!} />
+        }
         {IconStateBtn && <Paper sx={{ m: '3px' }} elevation={12}>
 
           <IconButton sx={{ width: '43px', height: '43px' }} onClick={() => { srcIconPath.current = '../../public/Pin.svg' }}>
@@ -207,6 +206,10 @@ const MapOpenLayers = (props: Props) => {
 }
 
 export default MapOpenLayers
+
+
+
+
 
 
 

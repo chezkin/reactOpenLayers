@@ -28,16 +28,19 @@ import { Feature } from 'ol';
 import { Geometry, Point, Polygon } from 'ol/geom';
 import Style from 'ol/style/Style';
 import Icon from 'ol/style/Icon';
+import Source from 'ol/source/Source';
 
 
 
 
 
   // func options in map 
-  export const cangeLayer = (map: Map,layre: TileLayer<XYZ | OSM>) => {
-    map?.setLayers([layre]);
+  export const cangeLayer = (map: Map, source: Source) => {
+    const firstLayer = map.getAllLayers()[0];
+    firstLayer.setSource(source)
+    // map?.setLayers([layre]);
     const view = map!.getView();
-    view.setZoom(1)
+    // view.setZoom(1)
   };
 
   export const lessZoom = (map: Map) => {
